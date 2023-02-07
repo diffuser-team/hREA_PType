@@ -1,0 +1,21 @@
+environment_path: /home/meeeee/.local/share/holochain/databases1
+keystore_path: /home/meeeee/.local/share/holochain/keystore1
+passphrase_service: ~
+keystore:
+  type: lair_server_in_proc
+admin_interfaces:
+  - driver:
+      type: websocket
+      port: 1235
+network:
+  bootstrap_service: https://bootstrap-staging.holo.host
+  network_type: quic_bootstrap
+  transport_pool:
+    - type: proxy
+      sub_transport:
+        type: quic
+      proxy_config:
+        type: local_proxy_server
+dpki: null
+chc_namespace: null
+db_sync_strategy: Fast

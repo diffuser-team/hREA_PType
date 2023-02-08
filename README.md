@@ -22,7 +22,7 @@ Update your `conductor-config.yml` file with this information. This is the infor
 
 Do the same thing for `conductor-config2.yml`, creating a `databases1` and `keystores1` folder in your chosen directory.
 
-To set up, open four terminals. In the first terminal run the following commands:
+To set up, open four terminals. In the first terminal run the following commands (wait for the previous to finish):
 
 `echo "" | RUST_LOG=info holochain --piped -c conductor-config.yml`
 `hc sandbox call --running=1234 install-app --app-id=hrea_tester ./bundles/app/full_suite/hrea_suite.happ`
@@ -30,6 +30,18 @@ To set up, open four terminals. In the first terminal run the following commands
 
 Once you have done this, open a second terminal:
 
+`echo "ppp" | RUST_LOG=info holochain --piped -c conductor-config2.yml`
+`hc sandbox call --running=1235 install-app-bundle --app-id=hrea_tester ./bundles/app/full_suite/hrea_suite.happ`
+`hc sandbox call --running=1235 add-app-ws 8881`
+
+
+Then in your last two terminals set up your front ends, passing the right environmental variables to `react-scripts-start` (check out the `package.json`)
+
+Now, you might be noting something:
+
+### That is terrible and I hate you.
+
+You are correct. However, when I ran with holochain sandbox, the gossip protocol wasn't working and agents were sharing a keystore. No good. This bypasses all that. However, if you really just want to get up and running quickly, run `npm run dev:network` and you'll get some version of a two-node holochain network up. Then you can run your two front ends concurrently and that's it. I'm not reading the admin port numbers from the `.hc_live` file so you have to do that manually for now (update your `package.json` with env vars), if we continue iterating we will automate but I didn't want to waste time.
 
 ## About
 

@@ -20,5 +20,5 @@ UTIL="${HOLOCHAIN_DNA_UTIL_PATH:-hc}"
 # echo \"pass\" | "$UTIL" s --piped -f=$ADM run --all -p $APP
 
 echo \"pass\" | "$UTIL" s --piped create -n 2 network --bootstrap https://bootstrap-staging.holo.host/ quic 
-echo \"pass\" | "$UTIL" s --piped call 0 1 install-app ./bundles/app/full_suite/hrea_suite.happ
-echo \"pass\" | WASM_LOG=debug RUST_LOG=warn "$UTIL" s --piped run --all -p 8880 8881
+echo \"pass\" | RUST_LOG=info "$UTIL" s --piped call 0 1 install-app ./bundles/app/full_suite/hrea_suite.happ
+echo \"pass\" | WASM_LOG=debug RUST_LOG=info "$UTIL" s --piped run --all -p 8880 8881 -f 1234 1235

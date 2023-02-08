@@ -10,6 +10,26 @@
 
 <!-- /MarkdownTOC -->
 
+## Note on Diffuser Prototype
+
+We are prototyping the interaction of two agents in ValueFlows land with the addition of artist metadata in another module.
+
+The second module is represented by a neo4j application exposing its own graphql interface.
+
+You will notice a `conductor-config.yml` file. You will want to create a `databases0` and `keystores0` folder and permission it accordingly. If you run `holochain -i` it will create a permissioned folder with some default config for spinning up conductors; you can add folders there to simplify after running `holochain -i` if you want a shortcut. 
+
+Update your `conductor-config.yml` file with this information. This is the information for the first node in your network (there will be two transacting parties).
+
+Do the same thing for `conductor-config2.yml`, creating a `databases1` and `keystores1` folder in your chosen directory.
+
+To set up, open four terminals. In the first terminal run the following commands:
+
+`echo "" | RUST_LOG=info holochain --piped -c conductor-config.yml`
+`hc sandbox call --running=1234 install-app --app-id=hrea_tester ./bundles/app/full_suite/hrea_suite.happ`
+`hc sandbox call --running=1234 add-app-ws 8880`
+
+Once you have done this, open a second terminal:
+
 
 ## About
 

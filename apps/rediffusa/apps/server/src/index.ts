@@ -10,6 +10,8 @@ import * as dotenv from "dotenv";
 
 dotenv.config();
 
+const PORT = Number(process.env.PORT);
+
 const driver = neo4j.driver(
   process.env.DB_URI || "",
   neo4j.auth.basic(process.env.DB_USER || "", process.env.DB_PASSWORD || "")
@@ -28,6 +30,10 @@ const neoSchema = new Neo4jGraphQL({
 });
 
 const start = async () => {
+  if (!PORT) {
+    throw new Error("invalid port number");
+  }
+
   const schema = await neoSchema.getSchema();
 
   const server = new ApolloServer<BaseContext>({
@@ -35,7 +41,7 @@ const start = async () => {
   });
 
   const { url } = await startStandaloneServer(server, {
-    listen: { port: 4000 },
+    listen: { port: PORT },
   });
 
   console.log("listening at: ", url);

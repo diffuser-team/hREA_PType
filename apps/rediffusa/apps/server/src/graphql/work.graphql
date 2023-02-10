@@ -1,17 +1,7 @@
+# there was originally a work type here but it should be an artist credit in a separate neo4j schema and be a many-to-one with the work (composer, writer, etc...)
 type Work {
   artist: Artist! @relationship(type: "CREDITED_ARTIST", direction: OUT)
   iswc: String!
   name: String!
   comment: String
-  type: WorkType!
-}
-
-type WorkType {
-  name: WorkTypeEnum
-}
-
-
-enum WorkTypeEnum {
-  SONGWRITING
-  EDITING
 }

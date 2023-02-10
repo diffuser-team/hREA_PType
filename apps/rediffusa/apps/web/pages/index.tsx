@@ -65,7 +65,7 @@ export default function Web() {
           <input placeholder="artist" {...register("artist")} />
           <label>
             {
-              "Just make sure you type the name in right, I'm not pulling any data here"
+              "Just make sure you type the name in right, I'm not pulling any data here. Can be name fragment, Wind for the guy on localhost:3000, G for the guy on localhost:3001"
             }
           </label>
           <input placeholder="iswc" {...register("iswc")} />

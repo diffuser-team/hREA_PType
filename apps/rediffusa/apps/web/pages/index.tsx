@@ -1,7 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useMutation, useApolloClient, gql } from "@apollo/client";
 import React from "react";
-import { CONDUCTOR_URI, ADMIN_CONDUCTOR_URI, HOLO_APP_ID } from "../constants";
 import useCreateWork from "../hooks/useCreateWork";
 
 interface WorkForm {
@@ -45,7 +43,7 @@ export default function Web() {
         </div>
       </form>
       <div>
-        <button onClick={() => getWorks()}>Get your artist's work 🔥</button>
+        <button onClick={() => getWorks()}>Get your artists work 🔥</button>
       </div>
     </div>
   );

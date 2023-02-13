@@ -10,6 +10,18 @@
 
 <!-- /MarkdownTOC -->
 
+## Note on Diffuser Prototype
+
+We are prototyping the interaction of two agents in ValueFlows land with the addition of artist metadata in another module.
+
+The second module is represented by a neo4j application exposing its own graphql interface.
+
+### Setup a Local Network to Test
+
+You will to run two conductors on the same machine so that you can simulate agent behaviour in terms of transactions. 
+
+First, get everything installed as per instructions further down in the repo and then run `npm run dev:network`, this will run a `.sh` script to set up your conductors. The admin conductor is output to a `.hc_live<x>` file, where `<x>` is the zero-indexed instantiation of a conductor. You can copy that into the respective `start` and `start:2` scripts in the `hrea-graphql-client` folder's `package.json` and then run `npm run start:all`. You can also spin up a holochain playground separately by running the `playground` script in the same folder.
+
 
 ## About
 

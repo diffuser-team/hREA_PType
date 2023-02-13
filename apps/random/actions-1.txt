@@ -1,0 +1,133 @@
+// notes put the spec in
+mutation CreatePerson {
+  createPerson(person: { name: "w1ndbr343R", note: "<schema or id from other module>" }) {
+    agent {
+      id
+      name
+      note
+    }
+  }
+}
+
+mutation AssociateMyAgent {
+  associateMyAgent(agentId: "uhCEkk_1xk1TsZJiP1BQJwSKI6K4Dkdz36zALdujujpULogRarhex:uhC0k4NjoQUfHzGdOLpZLkg41kAeTVfGc1lz-yUpWiVT0keMxWSeD")
+}
+
+# We can create resource specs which refer to types of resources we can point to when instanating individual items.
+# If we are defining commodities we can also define default units (storage space on diffuser spotify, bytes for eg)
+mutation CreateLaptopSpec {
+  createResourceSpecification(
+    resourceSpecification: {name: "Apple MacBook Air (MWT92LL/A) laptop Intel® i5 13.3\" WQXGA 16GB 512GB SSD Intel® Iris Plus gold ", note: "<additional product details", image: "https://www.ctshop.rs/product/img/laptopovi/apple-macbook-airmwt92ll-alaptop-intel-i5-13-3wqxga-16gb-512gb-ssd-intel-iris-plus-zlatni/normal/78590603_4550655094.jpg"}
+  ) {
+    resourceSpecification {
+      name
+      image
+      note
+      id
+    }
+  }
+}
+
+# hREA also allows for abstract economic resources to be specced, it's reasonably flexible from that point of view
+# When considering interoperability with related schemas in other modules, there are two options:
+# 1. Schema based
+# 2. Data based
+# Schema based involves a systematic higher level abstraction which is excessive for this prototoype
+# Data based is doable, utilising the generalised note field. Data based means using a shared id, the meaning of which is known across silos, utilised often in biosciences research datasets
+# In this prototype implementation I have elected to run our other "DiffuserOSModule"'s schema for a work through a sha256 hash and including it as a note. 
+# This would not work for data but because this is a spec the use case aligns and can serve as validation against code running on other modules.
+mutation CreateMusicCompSpec {
+  createResourceSpecification(
+    resourceSpecification: {name: "Musical Composition", note: "0efe1c5ac4e0328579bea14303f7e5b2db7b5f684b601e3b898c4e619a7d7b21"}
+  ) {
+    resourceSpecification {
+      name
+      image
+      note
+      id
+    }
+  }
+}
+
+
+# Now we create the actual economic resource. There are a few interesting notes here: 
+# 1. the action i believe is a hREA specific field used to unite types of events on the DHT. I haent seen in valueflows schema
+# 2. pto is a semantic web product ontology (productontology.org) - this appears to be enough to conform to the semantic web definition of product ontology assuming "Laptop" is the correct spec (there are 300k definitions, I didnt chekc)
+#    This is interesting in that we might define our own works/music RDF schema and then submit that to W3C on top of our work in defining our product ontology in more usable terms (graphql, whatever)
+#    RDF seems much more usable than OWL in terms of providing ready ids for itneroperable schemas, OWL is built on top of RDF in any case
+# 3. Linking to the id of the resource spec you have created is sufficient to define this laptop as an instance
+# 4. It looks like for this to be usable by a non-accountant a lot of work is going to have to be done on the front end for full data availability - storing agent id in context is a given, things like ensuring interoperability ids are correct will require a bit of handy guesswork.
+#    If we're getting imaginative there may be a layer, in the client or on the eventual DiffuserOS server, handling this stuff under the hood. With some automation I am confident in reasonable levels of statistical conformity to semantic web specs
+#    More generally for informal economy, end user applications this data is likely to be fragmented or wrong in the hREA ecosystem
+mutation CreateWindsLaptop {
+  createEconomicEvent(
+    event: {action: "raise", provider: "uhCEk52wbAz1uZdl4AERk13xUB2F4Q21L0kPmB_kWr5TCuh4nddLa:uhC0k4NjoQUfHzGdOLpZLkg41kAeTVfGc1lz-yUpWiVT0keMxWSeD", receiver: "uhCEk52wbAz1uZdl4AERk13xUB2F4Q21L0kPmB_kWr5TCuh4nddLa:uhC0k4NjoQUfHzGdOLpZLkg41kAeTVfGc1lz-yUpWiVT0keMxWSeD", resourceClassifiedAs: "pto:Laptop", resourceQuantity: {hasNumericalValue: 1}, hasPointInTime: "2022-06-09T18:51:57.105Z"}
+    newInventoriedResource: {name: "w1ndbr34k3R_laptop", conformsTo: "uhCEk5040ZDBUrx6eee_TLuS_8RmidwuMmqlLHCzHx_j5pR-Pfm9D:uhC0kRZDJT8By2MHXGsX7VtQm_znd7mP76oJpd2e3Uh8ivZq3BT0F"}
+  ) {
+    economicEvent {
+      id
+      action {
+        id
+      }
+      resourceClassifiedAs
+      resourceQuantity {
+        hasNumericalValue
+      }
+      hasPointInTime
+    }
+    economicResource {
+      id
+      name
+      classifiedAs
+      accountingQuantity {
+        hasNumericalValue
+      }
+      onhandQuantity {
+        hasNumericalValue
+      }
+      conformsTo {
+        id
+        name
+        image
+      }
+    }
+  }
+}
+
+{
+  "data": {
+    "createEconomicEvent": {
+      "economicEvent": {
+        "id": "uhCEkkTxE8M15BmxSa95Y4suLZEWqoVERBmj5Ng197gvW0eS8AFxp:uhC0kqgODS3npE6Y2TP8Qu9OPcEV_XHVABQWYM5Txf7axL6nQHncM",
+        "action": {
+          "id": "raise"
+        },
+        "resourceClassifiedAs": [
+          "pto:Laptop"
+        ],
+        "resourceQuantity": {
+          "hasNumericalValue": 1
+        },
+        "hasPointInTime": "2022-06-09T18:51:57.105Z"
+      },
+      "economicResource": {
+        "id": "uhCEkhcpqcy12Rc026G_iAdeDJ2HoLnsP9ew7PnqNQkRX8IXL0RqR:uhC0kqgODS3npE6Y2TP8Qu9OPcEV_XHVABQWYM5Txf7axL6nQHncM",
+        "name": "w1ndbr34k3R_laptop",
+        "classifiedAs": [
+          "pto:Laptop"
+        ],
+        "accountingQuantity": {
+          "hasNumericalValue": 1
+        },
+        "onhandQuantity": {
+          "hasNumericalValue": 1
+        },
+        "conformsTo": {
+          "id": "uhCEk5040ZDBUrx6eee_TLuS_8RmidwuMmqlLHCzHx_j5pR-Pfm9D:uhC0kRZDJT8By2MHXGsX7VtQm_znd7mP76oJpd2e3Uh8ivZq3BT0F",
+          "name": "Apple MacBook Air (MWT92LL/A) laptop Intel® i5 13.3\" WQXGA 16GB 512GB SSD Intel® Iris Plus gold ",
+          "image": "https://www.ctshop.rs/product/img/laptopovi/apple-macbook-airmwt92ll-alaptop-intel-i5-13-3wqxga-16gb-512gb-ssd-intel-iris-plus-zlatni/normal/78590603_4550655094.jpg"
+        }
+      }
+    }
+  }
+}

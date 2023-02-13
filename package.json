@@ -30,7 +30,7 @@
     "dev:graphql:explorer": "cd apps/hrea-graphql-explorer && npm start",
     "dev:rediffusa-server": "cd apps/rediffusa/apps/server && yarn dev",
     "dev:rediffusa-client": "cd apps/rediffusa/apps/web && yarn dev",
-    "dev:network": "hc s clean && concurrently \"scripts/run-dev-network.sh\" \"sleep 50 && npm run playground\"",
+    "dev:network": "hc s clean && concurrently \"scripts/run-dev-network.sh\" \"sleep 50\"",
     "dev:network:alt": "hc s clean && concurrently \"scripts/network-node-1.sh\" \"scripts/network-node-2.sh\"",
     "playground": "run-singleton \"holochain-playground\"",
     "watch": "npm-watch",

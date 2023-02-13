@@ -1,5 +1,8 @@
 import { useForm } from "react-hook-form";
 import { useMutation, useApolloClient, gql } from "@apollo/client";
+import React from "react";
+import { CONDUCTOR_URI, ADMIN_CONDUCTOR_URI, HOLO_APP_ID } from "../constants";
+import useCreateWork from "../hooks/useCreateWork";
 
 interface WorkForm {
   name: string;
@@ -8,72 +11,42 @@ interface WorkForm {
   comment: string;
 }
 
-const CREATE_WORKS = gql`
-  mutation CreateWork($input: [WorkCreateInput!]!, $where: ArtistWhere) {
-    createWorks(input: $input) {
-      works {
-        name
-        iswc
-        artist(where: $where) {
-          name
-          gender {
-            name
-          }
-        }
-      }
-    }
-  }
-`;
-
 export default function Web() {
-  const client = useApolloClient();
-  const { register, handleSubmit } = useForm<WorkForm>();
-  const [createWork, { data, loading, error }] = useMutation(CREATE_WORKS);
+  const { register, handleSubmit, getValues } = useForm<WorkForm>();
+  const [createWork, { loading, data, error }] = useCreateWork();
 
   const onSubmit = async (data: WorkForm) => {
     const { name, iswc, artist, comment } = data;
-    const res = await createWork({
-      variables: {
-        input: {
-          name,
-          iswc,
-          comment,
-          artist: {
-            connect: {
-              overwrite: false,
-              where: {
-                node: {
-                  name_CONTAINS: artist,
-                },
-              },
-            },
-          },
-        },
-      },
-    });
-    console.log("sheeeiiiiit");
+    const res = await createWork(name, iswc, comment, artist);
     console.log(res);
   };
 
-  const thing = useMutation(CREATE_WORKS);
-  console.log(thing!);
+  const getWorks = async () => {
+    const data = getValues();
+    console.log("let's see what we have here");
+    console.log(data);
+  };
 
+  /**
+   * windbreaker on localhost:3000, dagooj on localhost:3001 if you decide to do that
+   */
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <input placeholder="artist" {...register("artist")} />
-          <label>
-            {
-              "Just make sure you type the name in right, I'm not pulling any data here. Can be name fragment, Wind for the guy on localhost:3000, G for the guy on localhost:3001"
-            }
-          </label>
+          <select {...register("artist")}>
+            <option value="Wind">w1ndbr34k3R</option>
+            <option value="Da">DAG00J</option>
+          </select>
           <input placeholder="iswc" {...register("iswc")} />
           <input placeholder="name" {...register("name")} />
           <input placeholder="comment" {...register("comment")} />
           <input type="submit" />
         </div>
       </form>
+      <div>
+        <button onClick={() => getWorks()}>Get your artist's work 🔥</button>
+      </div>
     </div>
   );
 }

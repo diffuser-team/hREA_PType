@@ -1,0 +1,15 @@
+mutation CreatePerson {
+  createPerson(person: { name: "D4G00J", note: "<schema or id from other module>" }) {
+    agent {
+      id
+      name
+      note
+    }
+  }
+}
+
+
+mutation AssociateMyAgent {
+  associateMyAgent(agentId: "uhCEkk_1xk1TsZJiP1BQJwSKI6K4Dkdz36zALdujujpULogRarhex:uhC0k4NjoQUfHzGdOLpZLkg41kAeTVfGc1lz-yUpWiVT0keMxWSeD")
+}
+

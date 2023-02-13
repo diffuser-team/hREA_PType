@@ -26,8 +26,8 @@
   },
   "scripts": {
     "start:all": "concurrently \"npm run start\" \"npm run start:2\"",
-    "start": "REACT_APP_HC_APP_ID='hrea_suite' REACT_APP_HC_CONN_URL='ws://localhost:8880' REACT_APP_HC_ADMIN_CONN_URL='ws://localhost:35175' BROWSER=none react-scripts start",
-    "start:2": "PORT=3001 REACT_APP_HC_APP_ID='hrea_suite' REACT_APP_HC_CONN_URL='ws://localhost:8881' REACT_APP_HC_ADMIN_CONN_URL='ws://localhost:41057' BROWSER=none react-scripts start",
+    "start": "REACT_APP_HC_APP_ID='hrea_suite' REACT_APP_HC_CONN_URL='ws://localhost:8880' REACT_APP_HC_ADMIN_CONN_URL='ws://localhost:38247' BROWSER=none react-scripts start",
+    "start:2": "PORT=3001 REACT_APP_HC_APP_ID='hrea_suite' REACT_APP_HC_CONN_URL='ws://localhost:8881' REACT_APP_HC_ADMIN_CONN_URL='ws://localhost:34541' BROWSER=none react-scripts start",
     "build": "rimraf ui.zip && rimraf build && react-scripts build && cd ./build && bestzip ../ui.zip * ",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
